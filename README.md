@@ -84,8 +84,10 @@
 2. Tambahkan di form:
     ```html
     <div>
-        {!! NoCaptcha::renderJs() !!}
-        {!! NoCaptcha::display() !!}
+        <label for="captcha">Captcha</label>
+        {!! captcha_img() !!}
+        <input id="captcha" type="text" class="form-control" name="captcha" required>
+        <a href="javascript:void(0)" onclick="refreshCaptcha()">Refresh Captcha</a>
     </div>
     ```
 3. Validasi di controller:
@@ -93,5 +95,12 @@
     $request->validate([
         'g-recaptcha-response' => 'required|captcha',
     ]);
+    ```
+4. tambahkan routes:
+    ```php
+    
+    Route::get('/refresh-captcha', function () {
+        return response()->json(['captcha' => captcha_img()]);
+    });
     ```
 
